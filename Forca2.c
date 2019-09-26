@@ -28,6 +28,16 @@ void inicilizaVetor(char vetor[], int tamanhoVetor, char preenchimento) {
 void letraErrada(char vetorErrado[], int posicao, char letra){
 	vetorErrado[posicao] = letra;
 }
+void desenhaBoneco(int vida){
+printf(" ");
+printf(" ");
+printf(" ");
+printf(" ");
+printf(" ");
+printf(" ");
+printf(" ");
+printf(" ");
+}
 
 
 int contaLetras(char vetor[]){
