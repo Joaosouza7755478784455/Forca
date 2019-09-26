@@ -13,19 +13,6 @@ if(Ferrou == 1){
 }
 */
 
-int comparaPalavras(char palavra[], char palavra2[]){
-	int tamanho = contaLetras(palavra), i, acertos=0;
-	for(i = 0; i<tamanho; i++){
-		if(palavra[i] == palavra2[i]){
-			acertos++;
-		}
-	}
-	if(acertos == tamanho){
-		return 1;
-	}else{
-		return 0;
-	}
-}
 
 void inicilizaVetor(char vetor[], int tamanhoVetor, char preenchimento) {
 	int i;
@@ -43,14 +30,57 @@ void letraErrada(char vetorErrado[], int posicao, char letra){
 }
 
 void desenhaBoneco(int vida){
-printf(" ");
-printf(" ");
-printf(" ");
-printf(" ");
-printf(" ");
-printf(" ");
-printf(" ");
+if(vida==0){
+printf(" ________\n");
+printf("|        |\n");
+printf("|        |\n");
+printf("|         \n");
+printf("|         \n");
+printf("|__       \n");
 }
+if(vida==1){
+printf(" ________\n");
+printf("|        |\n");
+printf("|        |\n");
+printf("|        o    \n");
+printf("|             \n");
+printf("|__           \n");
+}
+if(vida==2){
+printf(" ________\n");
+printf("|        |\n");
+printf("|        |\n");
+printf("|        O    \n");
+printf("|        |    \n");
+printf("|__           \n");
+}
+if(vida==3){
+printf(" ________\n");
+printf("|        |\n");
+printf("|        |\n");
+printf("|        O   \n");
+printf("|       /|  \n");
+printf("|__          \n");
+}
+if(vida==4){
+printf(" ________\n");
+printf("|        |\n");
+printf("|        |\n");
+printf("|        O   \n");
+printf("|       /|\\  \n");
+printf("|__         \n");
+}
+if(vida==5){
+printf(" ________\n");
+printf("|        |\n");
+printf("|        |\n");
+printf("|        O   \n");
+printf("|       /|\\  \n");
+printf("|__     /    \n");
+}
+
+}
+
 int contaLetras(char vetor[]){
 	int cont, i;
 	i = cont = 0;
@@ -100,9 +130,9 @@ void exibirVetor(char vetor[], int tamanho){
 
 int main(){
 	
-	int terminado = 0, qletras, erros = 0, i, Ntentativa = 0, finalAcerto = 0;
+	int terminado = 0, qletras, erros = 0, i, Ntentativa = 0;
 	
-	char letraErradas[20], letra[20], palavra[20], dica[20], riscos[20];
+	char letraErradas[20], letra, palavra[20], dica[20], riscos[20];
 	
 	// Le palavra
 	printf("Jogador 1 \nDigite uma palavra:");
@@ -112,6 +142,7 @@ int main(){
 	printf("\nDigite a dica:");
 	scanf("\n%s", &dica);
 	
+	
 	// Atrubui a qletras
 	qletras = contaLetras(palavra);
 
@@ -119,11 +150,11 @@ int main(){
 	inicilizaVetor(riscos, qletras, '-') ;
 	inicilizaVetor(letraErradas, 20, '\0');
 	// Inicio o jogo
-	while(erros<5){
+	while(erros<6){
 	
 		terminado = 0;
 
-		system("cls");
+		//system("cls");
 
 		printf("Letras que foram erradas : ");
 		exibirVetor(letraErradas, erros+1);
@@ -132,32 +163,21 @@ int main(){
 
 		printf("Dica : ");
 		exibirVetor(dica, contaLetras(dica));
-		
-		/*
-			LOCAL PARA O BONECO
-		*/
-		
+		desenhaBoneco(erros);
 		exibirVetor(riscos, qletras);
 
 		printf("Digita uma letra:\n");
 
 		// Le a letra
-		scanf("\n%s", &letra);
-		if(contaLetras(letra) == 1){
+		scanf("\n%c", &letra);
 		
-			if (jogada(palavra, letra[0]) != 1){
-				erros++;
-				letraErrada(letraErradas, erros, letra[0]);
-			}
+		if (jogada(palavra, letra) != 1){
+			erros++;
+			letraErrada(letraErradas, erros, letra);
+		}
 			
-			substuiLetras(riscos, palavra, letra[0]);
-		}
-		else{
-			finalAcerto = comparaPalavras(palavra, letra);
-			break;
+		substuiLetras(riscos, palavra, letra);
 		
-		}
-	
 		for(i =0; i<qletras;i++){
 			if (riscos[i] == '-'){
 				terminado++;
@@ -172,20 +192,10 @@ int main(){
 	}
 
 	system("cls");
-	if(finalAcerto == 1){
-		printf("Voce venceu o jogo!!\n A palavra era: %s", palavra);
-	}else if(terminado == 0){
-		printf("Voce venceu o jogo em %d jogadas\n A palavra era: %s", Ntentativa, palavra);
-		
-	}else{
-		printf("Voce perdeu o jogo :(\nA palavra era: %s", palavra);
-	}
-	
+	printf("Voce venceu o jogo em %d jogadas\n", Ntentativa);
 	scanf("%c");
 	return 0;
 }
-	
-	
 	
 	
 
